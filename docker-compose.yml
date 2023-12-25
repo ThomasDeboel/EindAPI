@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+ system-service:
+  image: thomasje007/basisprojectapi #image name on dockerhub
+
+
+  ports:
+    - "8000:8000"
+  volumes:
+    - sqlite_useritems_volume:/code/sqlitedb
+
+volumes:
+  sqlite_useritems_volume:
