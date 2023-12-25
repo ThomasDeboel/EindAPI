@@ -1,15 +1,16 @@
 from pydantic import BaseModel
 
-
-class MerkBase(BaseModel):
+class SwitchBase(BaseModel):
     name: str
+    type: str
+    keyboard_id: int
 
-class MerkCreate(MerkBase):
+class SwitchCreate(SwitchBase):
     pass
 
-class Merk(MerkBase):
+class Switch(SwitchBase):
     id: int
-    accesoires: list[Keyboard]=[]
+    keyboard_parent: int
     
     class Config:
         orm_mode = True
@@ -24,23 +25,20 @@ class KeyboardCreate(KeyboardBase):
 
 class Keyboard(KeyboardBase):
     id: int
-    merk_owner: Merk
+    merk_owner: int
     switches_owner: list[Switch]=[]
     
     class Config:
         orm_mode = True
-
-class SwitchBase(BaseModel):
+class MerkBase(BaseModel):
     name: str
-    type: str
-    keyboard_id: int
 
-class SwitchCreate(SwitchBase):
+class MerkCreate(MerkBase):
     pass
 
-class Switch(SwitchBase):
+class Merk(MerkBase):
     id: int
-    keyboard_parent: Keyboard
+    accesoires: list[Keyboard]=[]
     
     class Config:
         orm_mode = True
