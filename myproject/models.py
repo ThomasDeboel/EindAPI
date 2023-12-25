@@ -4,22 +4,32 @@ from sqlalchemy.orm import relationship
 from database import Base
 
 
-class Platform(Base):
-    __tablename__ = "platforms"
+class Merk(Base):
+    __tablename__ = "merken"
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, index=True)
 
-    games = relationship("Game", back_populates="platform_owner")
+    accesoires = relationship("Keyboard", back_populates="merk_owner")
 
 
-class Game(Base):
-    __tablename__ = "games"
+class Keyboard(Base):
+    __tablename__ = "keyboards"
 
     id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, index=True)
-    description = Column(String, index=True)
-    is_installed = Column(Boolean, default=False)
-    platform_owner_id = Column(Integer, ForeignKey("platforms.id"))
+    naam = Column(String, index=True)
+    is_wireless = Column(Boolean, default=False)
+    merk_owner_id = Column(Integer, ForeignKey("merken.id"))
 
-    platform_owner = relationship("Platform", back_populates="games")
+    merk_owner = relationship("Merk", back_populates="accesoires")
+    switches_owner = relationship("Switch", back_populates="keyboard_parent")
+
+class Switch(Base):
+    __tablename__ = "switches"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, unique=True, index=True)
+    type = Column(String, index=True)
+    keyboard_id = Column(Integer, ForeignKey("keyboards.id"))
+
+    keyboard_parent = relationship("Headset", back_populates="switches_owner")

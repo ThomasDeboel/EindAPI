@@ -1,34 +1,46 @@
 from pydantic import BaseModel
 
 
-class GameBase(BaseModel):
-    title: str
-    description: str | None = None
+class MerkBase(BaseModel):
+    name: str
 
-
-class GameCreate(GameBase):
+class MerkCreate(MerkBase):
     pass
 
-
-class Game(GameBase):
+class Merk(MerkBase):
     id: int
-    platform_owner_id: int
-
+    accesoires: list[Keyboard]=[]
+    
     class Config:
         orm_mode = True
 
+class KeyboardBase(BaseModel):
+    naam: str
+    is_wireless: bool
+    merk_owner_id: int 
 
-class PlatformBase(BaseModel):
-    name: str
-
-
-class PlatformCreate(PlatformBase):
+class KeyboardCreate(KeyboardBase):
     pass
 
-
-class Platform(PlatformBase):
+class Keyboard(KeyboardBase):
     id: int
-    games: list[Game] = []
+    merk_owner: Merk
+    switches_owner: list[Switch]=[]
+    
+    class Config:
+        orm_mode = True
 
+class SwitchBase(BaseModel):
+    name: str
+    type: str
+    keyboard_id: int
+
+class SwitchCreate(SwitchBase):
+    pass
+
+class Switch(SwitchBase):
+    id: int
+    keyboard_parent: Keyboard
+    
     class Config:
         orm_mode = True

@@ -31,56 +31,93 @@ def get_db():
 async def read_items():
     return """
     <html><head>
-    <title>Home page for Thomas's API </title>
+    <title>Home page for Thomas's END API </title>
     </head>
     <body>
-    <h1> Home page of Thomas's API</h1>
+    <h1> Home page of Thomas's END API</h1>
     <ul>
     <li> <a href="/docs">Documentation</a></li>
-    <li> <a href="/platforms/">Platforms</a></li>
-    <li> <a href="/games/">Games</a></li>
+
     </ul>
     </body>
     </html>
     """
-@app.post("/platforms/", response_model=schemas.Platform)
-def create_platform(platforms: schemas.PlatformCreate, db: Session = Depends(get_db)):
-    db_platform = crud.get_program_by_name(db, name=platforms.name)
-    if db_platform:
-        raise HTTPException(status_code=400, detail="Platform name already exist")
-    return crud.create_platform(db=db, platform=platforms)
 
+@app.get("/merken/", response_model=list[schemas.Merk])
+def read_merken(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    merken = crud.get_merken(db, skip=skip, limit=limit)
+    return merken
 
-@app.get("/platforms/", response_model=list[schemas.Platform])
-def read_platforms(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    platforms = crud.get_platforms(db, skip=skip, limit=limit)
-    return platforms
+@app.post("/merken/", response_model=schemas.Merk)
+def create_merk(merk: schemas.MerkCreate, db: Session = Depends(get_db)):
+    db_merk = crud.get_merk_by_name(db, merk_name=merk.name)
+    if db_merk:
+        raise HTTPException(status_code=400, detail="Merk already registered")
+    return crud.create_merk(db=db, merk=merk)
 
+@app.get("/merken/{merk_id}", response_model=schemas.Merk)
+def read_merk(merk_id: int, db: Session = Depends(get_db)):
+    db_merk = crud.get_merk(db, merk_id=merk_id)
+    if db_merk is None:
+        raise HTTPException(status_code=404, detail="Merk not found")
+    return db_merk
 
-@app.get("/platforms/{platform_id}", response_model=schemas.Platform)
-def read_platforms(platform_id: int, db: Session = Depends(get_db)):
-    db_platform = crud.get_program(db, platform_id=platform_id)
-    if db_platform is None:
-        raise HTTPException(status_code=404, detail="Platform not found")
-    return db_platform
+@app.put("/merken/{merk_id}", response_model=schemas.Merk)
+def put_merk(merk_id: int, merk: schemas.MerkCreate, db: Session = Depends(get_db)):
+    db_merk = crud.get_merk(db, merk_id=merk_id)
+    if db_merk is None:
+        raise HTTPException(status_code=404, detail="Merk not found")
+    return crud.put_merk(db=db, merk=merk, merk_id=merk_id)
 
+@app.delete("/merken/{merk_id}", response_model=schemas.Merk)
+def delete_merk(merk_id: int, db: Session = Depends(get_db)):
+    db_merk = crud.get_merk(db, merk_id=merk_id)
+    if db_merk is None:
+        raise HTTPException(status_code=404, detail="Merk not found")
+    return crud.delete_merk(db=db, merk_id=merk_id)
 
-@app.post("/platforms/{platform_id}/games/", response_model=schemas.Game)
-def create_game_for_platform(
-    platform_id: int, game_id: schemas.GameCreate, db: Session = Depends(get_db)
+@app.delete("/merken/", response_model=schemas.Merk)
+def delete_all_merken(db: Session = Depends(get_db)):
+    return crud.delete_all_merken(db=db)
+
+@app.get("/keyboards/", response_model=list[schemas.Keyboard])
+def read_keyboards(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    keyboards = crud.get_keyboards(db, skip=skip, limit=limit)
+    return keyboards
+
+@app.post("/keyboards/", response_model=schemas.Keyboard)
+def create_keyboard(
+    keyboard: schemas.KeyboardCreate, merk_id: int, db: Session = Depends(get_db)
 ):
-    return crud.create_platform_game(db=db, game=game_id, platform_id=platform_id)
+    return crud.create_keyboard(db=db, keyboard=keyboard, merk_id=merk_id)
 
+@app.get("/keyboards/{keyboard_id}", response_model=schemas.Keyboard)
+def read_keyboard(keyboard_id: int, db: Session = Depends(get_db)):
+    db_keyboard = crud.get_keyboard(db, keyboard_id=keyboard_id)
+    if db_keyboard is None:
+        raise HTTPException(status_code=404, detail="Keyboard not found")
+    return db_keyboard
 
-@app.get("/games/", response_model=list[schemas.Game])
-def read_games(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    games = crud.get_games(db, skip=skip, limit=limit)
-    return games
+@app.delete("/keyboards/", response_model=schemas.Keyboard)
+def delete_all_keyboards(db: Session = Depends(get_db)):
+    return crud.delete_all_keyboards(db=db)
 
-@app.delete("/platforms/{platform_id}/games/{game_id}", response_model=schemas.Game)
-def delete_game(platform_id: int, game_id: int, db: Session = Depends(get_db)):
-    db_game = crud.delete_game(db=db, game_id=game_id)
-    if db_game is None:
-        raise HTTPException(status_code=404, detail="Game not found")
-    return db_game
+@app.get("/switches/", response_model=list[schemas.Switch])
+def read_switches(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    switches = crud.get_switch(db, skip=skip, limit=limit)
+    return switches
+
+@app.post("/switches/", response_model=schemas.Switch)
+def create_switch(
+    switch: schemas.SwitchCreate, keyboard_id: int, db: Session = Depends(get_db)
+):
+    return crud.create_switch(db=db, switch=switch, keyboard_id=keyboard_id)
+
+@app.get("/switches/{switch_id}", response_model=schemas.Switch)
+def read_switch(switch_id: int, db: Session = Depends(get_db)):
+    db_switch = crud.get_switch(db, switch_id=switch_id)
+    if db_switch is None:
+        raise HTTPException(status_code=404, detail="Switch not found")
+    return db_switch
+
 
