@@ -32,4 +32,4 @@ class Switch(Base):
     type = Column(String, index=True)
     keyboard_id = Column(Integer, ForeignKey("keyboards.id"))
 
-    keyboard_parent = relationship("Headset", back_populates="switches_owner")
+    keyboard_parent = relationship("Keyboard", back_populates="switches_owner")
