@@ -1,7 +1,9 @@
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 from sqlalchemy.orm import Session
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
+import auth
 import os
 import crud
 import models
@@ -120,4 +122,25 @@ def read_switch(switch_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Switch not found")
     return db_switch
 
+#############################################################################################################
+# JWT Authentication
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+@app.post("/token")
+def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    #Try to authenticate the user
+    user = auth.authenticate_user(db, form_data.username, form_data.password)
+    if not user:
+        raise HTTPException(
+            status_code=401,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    # Add the JWT case sub with the subject(user)
+    access_token = auth.create_access_token(
+        data={"sub": user.email}
+    )
+    #Return the JWT as a bearer token to be placed in the headers
+    return {"access_token": access_token, "token_type": "bearer"}
+#############################################################################################################
 
