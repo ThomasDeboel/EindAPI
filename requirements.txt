@@ -7,3 +7,5 @@ bcrypt
 argon2_cffi
 pytest
 requests
+python-jose[cryptography]
+
