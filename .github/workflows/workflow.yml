@@ -37,5 +37,4 @@ jobs:
         run: |
           cd myproject
           uvicorn main:app --reload
-          cd ../
-          pytest myproject/test_file.py
+          pytest test_file.py
