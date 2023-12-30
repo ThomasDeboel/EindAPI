@@ -26,6 +26,10 @@ def create_merk(db: Session, merk: schemas.MerkCreate):
 def get_keyboard(db: Session, keyboard_id: int):
     return db.query(models.Keyboard).filter(models.Keyboard.id == keyboard_id).first()
 
+def get_keyboards(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.Keyboard).offset(skip).limit(limit).all()
+    
+
 def create_keyboard(db: Session, keyboard: schemas.KeyboardCreate, merk_id: int):
     db_keyboard = models.Keyboard(**keyboard.dict(), merk_owner_id=merk_id)
     db.add(db_keyboard)
@@ -35,6 +39,9 @@ def create_keyboard(db: Session, keyboard: schemas.KeyboardCreate, merk_id: int)
 
 def get_switch(db: Session, switch_id: int):
     return db.query(models.Switch).filter(models.Switch.id == switch_id).first()
+
+def get_switches(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.Switch).offset(skip).limit(limit).all()
 
 def create_switch(db: Session, switch: schemas.SwitchCreate, keyboard_id: int):
     db_switch = models.Switch(**switch.dict(), keyboard_id=keyboard_id)

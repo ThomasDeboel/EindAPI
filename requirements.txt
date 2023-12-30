@@ -5,3 +5,5 @@ sqlalchemy==1.4.42
 passlib
 bcrypt
 argon2_cffi
+pytest
+requests

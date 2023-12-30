@@ -87,9 +87,6 @@ def delete_merk(merk_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Merk not found")
     return crud.delete_merk(db=db, merk_id=merk_id)
 
-@app.delete("/merken/", response_model=schemas.Merk)
-def delete_all_merken(db: Session = Depends(get_db)):
-    return crud.delete_all_merken(db=db)
 
 @app.get("/keyboards/", response_model=list[schemas.Keyboard])
 def read_keyboards(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
@@ -109,13 +106,10 @@ def read_keyboard(keyboard_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Keyboard not found")
     return db_keyboard
 
-@app.delete("/keyboards/", response_model=schemas.Keyboard)
-def delete_all_keyboards(db: Session = Depends(get_db)):
-    return crud.delete_all_keyboards(db=db)
 
 @app.get("/switches/", response_model=list[schemas.Switch])
 def read_switches(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    switches = crud.get_switch(db, skip=skip, limit=limit)
+    switches = crud.get_switches(db, skip=skip, limit=limit)
     return switches
 
 @app.post("/switches/", response_model=schemas.Switch)

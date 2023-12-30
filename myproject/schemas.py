@@ -3,14 +3,13 @@ from pydantic import BaseModel
 class SwitchBase(BaseModel):
     name: str
     type: str
-    keyboard_id: int
 
 class SwitchCreate(SwitchBase):
     pass
 
 class Switch(SwitchBase):
     id: int
-    keyboard_parent: int
+    keyboard_id: int
     
     class Config:
         orm_mode = True
@@ -18,14 +17,13 @@ class Switch(SwitchBase):
 class KeyboardBase(BaseModel):
     naam: str
     is_wireless: bool
-    merk_owner_id: int 
 
 class KeyboardCreate(KeyboardBase):
     pass
 
 class Keyboard(KeyboardBase):
     id: int
-    merk_owner: int
+    merk_owner_id: int 
     switches_owner: list[Switch]=[]
     
     class Config:
