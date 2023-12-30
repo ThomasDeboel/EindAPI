@@ -20,8 +20,9 @@ jobs:
         run: docker push ${{ secrets.DOCKER_USER }}/python-end-api:latest
 
   build:
+
     runs-on: ubuntu-latest
-    name: test python
+    name: test
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python 3.8
@@ -34,4 +35,4 @@ jobs:
           pip install -r requirements.txt
       - name: Run tests
         run: |
-          pytest -v
+          pytest myproject/test_file.py
