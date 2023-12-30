@@ -3,10 +3,11 @@ import json
 
 from fastapi.testclient import TestClient
 
-from main import app
+from myproject.main import app
+client = TestClient(app)
 
 def test_get_merken():
-    response = requests.get("/merken/")
+    response = client.get("/merken/")
     assert response.status_code == 200
     response_dictionary = json.loads(response.text)
     print(response_dictionary)
@@ -20,7 +21,7 @@ def test_get_merken():
 
 
 def test_get_keyboards():
-    response = requests.get("/keyboards/")
+    response = client.get("/keyboards/")
     assert response.status_code == 200
     response_dictionary = json.loads(response.text)
     assert type(response_dictionary) == list
@@ -32,7 +33,7 @@ def test_get_keyboards():
     assert type(response_dictionary[0]["switches_owner"]) == list
 
 def test_get_switches():
-    response = requests.get("/switches/")
+    response = client.get("/switches/")
     assert response.status_code == 200
     response_dictionary = json.loads(response.text)
     assert type(response_dictionary) == list
