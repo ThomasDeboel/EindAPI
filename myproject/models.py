@@ -33,3 +33,11 @@ class Switch(Base):
     keyboard_id = Column(Integer, ForeignKey("keyboards.id"))
 
     keyboard_parent = relationship("Keyboard", back_populates="switches_owner")
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, unique=True, index=True)
+    hashed_password = Column(String)
+    is_active = Column(Boolean, default=True)
