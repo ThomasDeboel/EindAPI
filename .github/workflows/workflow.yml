@@ -39,4 +39,6 @@ jobs:
       - name: Wait for Uvicorn to start
         run: sleep 10  # Wait for 10 seconds
       - name: Run pytest
-        run: pytest .\myproject\test_file.py
+        run: |
+          cd myproject
+          pytest test_file.py
