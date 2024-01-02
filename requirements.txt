@@ -9,4 +9,3 @@ pytest
 requests
 python-jose[cryptography]
 python-multipart
-python-dotenv
