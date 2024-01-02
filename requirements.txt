@@ -8,4 +8,5 @@ argon2_cffi
 pytest
 requests
 python-jose[cryptography]
-
+python-multipart
+python-dotenv
