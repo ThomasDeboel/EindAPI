@@ -1,9 +1,8 @@
 version: "3.9"
 services:
  system-service:
+  build: .
   image: thomasje007/python-end-api #image name on dockerhub
-
-
   ports:
     - "8000:8000"
   volumes:
