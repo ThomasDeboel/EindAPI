@@ -106,6 +106,12 @@ def read_keyboard(keyboard_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Keyboard not found")
     return db_keyboard
 
+@app.delete("/keyboards/{keyboard_id}", response_model=schemas.Keyboard)
+def delete_keyboard(keyboard_id: int, db: Session = Depends(get_db)):
+    db_keyboard = crud.get_keyboard(db, keyboard_id=keyboard_id)
+    if db_keyboard is None:
+        raise HTTPException(status_code=404, detail="Keyboard not found")
+    return crud.delete_keyboard(db=db, keyboard_id=keyboard_id)
 
 @app.get("/switches/", response_model=list[schemas.Switch])
 def read_switches(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
@@ -124,6 +130,14 @@ def read_switch(switch_id: int, db: Session = Depends(get_db)):
     if db_switch is None:
         raise HTTPException(status_code=404, detail="Switch not found")
     return db_switch
+
+@app.delete("/switches/{switch_id}", response_model=schemas.Switch)
+def delete_switch(switch_id: int, db: Session = Depends(get_db)):
+    db_switch = crud.get_switch(db, switch_id=switch_id)
+    if db_switch is None:
+        raise HTTPException(status_code=404, detail="Switch not found")
+    return crud.delete_switch(db=db, switch_id=switch_id)
+
 
 #############################################################################################################
 # JWT Authentication
@@ -169,3 +183,10 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
+
+@app.delete("/users/{user_id}", response_model=schemas.User)
+def delete_user(user_id: int, db: Session = Depends(get_db)):
+    db_user = crud.get_user(db, user_id=user_id)
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return crud.delete_user(db=db, user_id=user_id)
