@@ -1,6 +1,7 @@
 ## Overview
 This project is about managing and tracking keyboards. The API allows you to create, read, update, and delete keyboard data. The data includes the makers, the keyboard name and the type of switches.
 
+
 ## Features
 - create read and delete keyboard data
 - create read update and delete maker data
@@ -72,4 +73,6 @@ This project is about managing and tracking keyboards. The API allows you to cre
 ### 2. Aanvulling: functie
 - [x] Test alle niet-GET endpoints.
 - [ ] Zorg ervoor dat de testfile ook tijdens de GitHub Actions gerund wordt. (dit heb ik geprobeerd maar het is niet gelukt)
-
+### 3. Aanvulling: frontend
+- [ ] Maak een frontend voor je applicatie die al je GET endpoints en POST endpoints bevat. (dit heb ik geprobeerd maar het is niet gelukt) (zie ./myproject/frontend.html)
+dit ging niet omdat ik niet kon verbinden met postman.
