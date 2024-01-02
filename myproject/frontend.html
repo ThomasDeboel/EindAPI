@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Frontend</title>
+</head>
+<body>
+    <h1>Merken</h1>
+    <button id="getMerken">Get Merken</button>
+    <div id="merken"></div>
+    <h2>Search Merk by ID</h2>
+    <input type="text" id="merkId" placeholder="Enter Merk ID">
+    <button id="searchMerk">Search</button>
+    <h2>Post Merk</h2>
+    <form action="https://system-service-thomasdeboel.cloud.okteto.net/merken/" method="post">
+        <label for="merkNaam">Merk naam:</label><br>
+        <input type="text" id="merkNaam" name="merkNaam" value="Merk naam"><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <h1>keyboards</h1>
+    <button id="getkeyboards">Get keyboards</button>
+    <div id="keyboards"></div>
+    <h2>Search Keyboard by ID</h2>
+    <input type="text" id="keyboardId" placeholder="Enter Keyboard ID">
+    <button id="searchKeyboard">Search</button>
+    <h2>Post Keyboard</h2>
+    <form action="https://system-service-thomasdeboel.cloud.okteto.net/keyboards/" method="post">
+        <label for="keyboardNaam">Keyboard naam:</label><br>
+        <input type="text" id="keyboardNaam" name="keyboardNaam" value="Keyboard naam"><br>
+        <label for="keyboardMerk">Keyboard merk:</label><br>
+        <input type="text" id="keyboardMerk" name="keyboardMerk" value="Keyboard merk id"><br>
+        <label for="keyboardSwitch">Keyboard switch:</label><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <h1>switches</h1>
+    <h2>all switches</h2>
+    <button id="getswitches">Get switches</button>
+    <div id="switches"></div>
+    <h2>Search Switch by ID</h2>
+    <input type="text" id="switchId" placeholder="Enter Switch ID">
+    <button id="searchSwitch">Search</button>
+    
+
+    <script>
+        document.getElementById('getMerken').addEventListener('click', function() {
+            fetch('https://system-service-thomasdeboel.cloud.okteto.net/merken/')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('merken').innerText = JSON.stringify(data);
+                });
+        });
+        document.getElementById('searchMerk').addEventListener('click', function() {
+            var merkId = document.getElementById('merkId').value;
+            fetch('https://system-service-thomasdeboel.cloud.okteto.net/merken/' + merkId)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('merken').innerText = JSON.stringify(data);
+                });
+        });
+        document.g
+
+        document.getElementById('getkeyboards').addEventListener('click', function() {
+            fetch('https://system-service-thomasdeboel.cloud.okteto.net/keyboards/')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('keyboards').innerText = JSON.stringify(data);
+                });
+        });
+        document.getElementById('searchKeyboard').addEventListener('click', function() {
+            var keyboardId = document.getElementById('keyboardId').value;
+            fetch('https://system-service-thomasdeboel.cloud.okteto.net/keyboards/' + keyboardId)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('keyboards').innerText = JSON.stringify(data);
+                });
+        });
+
+        document.getElementById('getswitches').addEventListener('click', function() {
+            fetch('https://system-service-thomasdeboel.cloud.okteto.net/switches/')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('switches').innerText = JSON.stringify(data);
+                });
+        });
+        document.getElementById('searchSwitch').addEventListener('click', function() {
+            var switchId = document.getElementById('switchId').value;
+            fetch('https://system-service-thomasdeboel.cloud.okteto.net/switches/' + switchId)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('switches').innerText = JSON.stringify(data);
+                });
+        });
+        document.querySelector('form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+            var merkNaam = document.getElementById('merkNaam').value;
+            fetch('https://system-service-thomasdeboel.cloud.okteto.net/merken/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ merkNaam: merkNaam })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data); // Handle the response data
+                });
+        });
+    </script>
+</body>
+</html>

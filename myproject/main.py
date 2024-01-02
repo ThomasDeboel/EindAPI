@@ -50,10 +50,6 @@ async def read_items():
     </html>
     """
 
-
-
-
-
 @app.get("/merken/", response_model=list[schemas.Merk])
 def read_merken(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     merken = crud.get_merken(db, skip=skip, limit=limit)
