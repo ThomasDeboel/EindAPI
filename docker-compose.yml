@@ -1,7 +1,7 @@
 version: "3.9"
 services:
  system-service:
-  image: thomasje007/basisprojectapi #image name on dockerhub
+  image: thomasje007/python-end-api #image name on dockerhub
 
 
   ports:
