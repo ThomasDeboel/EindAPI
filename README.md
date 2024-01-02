@@ -7,6 +7,10 @@ This project is about managing and tracking keyboards. The API allows you to cre
 - create read and delete switch data
 - create a user for oauth2 authentication
 
+## links
+- [Github](https://github.com/ThomasDeboel/EindAPI)
+- [Okteto](https://system-service-thomasdeboel.cloud.okteto.net/)
+
 ## API Endpoints
 - `/merken` GET: get all the makers
 - `/merken/{id}` GET: get a specific maker
@@ -29,6 +33,7 @@ This project is about managing and tracking keyboards. The API allows you to cre
 
 
 ## Screenshots
+- `/` GET: ![root/get](./Screens/getroot.png)
 - `/merken` GET: ![merken/get](./Screens/getmerken.png)
 - `/merken/{id}` GET: ![merken/get/id](./Screens/getmerkenid.png)
 - `/merken` POST: ![merken/post](./Screens/postmerken.png)
@@ -53,7 +58,7 @@ This project is about managing and tracking keyboards. The API allows you to cre
 
 
 ## Task list
-### Algemee eisen & Documentatie
+### 1.Algemee eisen & Documentatie
 - [x] Minstens 3 GET, 1 POST, 1 PUT en 1 DELETE endpoints
 - [x] Minstens 3 entiteiten in je API via een SQLite databank
 - [x] Minstens hashing en OAuth implementeren
@@ -64,7 +69,7 @@ This project is about managing and tracking keyboards. The API allows you to cre
 - [x] Docker container voor de API, welke automatisch door GitHub Actions opgebouwd wordt
 - [x] Deployment van de API container op Okteto Cloud via Docker Compose
 - [x] Test alle GET endpoints van een van je APIs via de Requests en pytest library met een testfile in de root van je repository.
-### aanvulling: functie
+### 2. Aanvulling: functie
 - [x] Test alle niet-GET endpoints.
 - [ ] Zorg ervoor dat de testfile ook tijdens de GitHub Actions gerund wordt. (dit heb ik geprobeerd maar het is niet gelukt)
 
